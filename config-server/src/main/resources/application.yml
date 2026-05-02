@@ -1,13 +1,12 @@
+# ==========================================
+# Common Configuration (Applies to all profiles)
+# ==========================================
 spring:
   application:
     name: config-server
+  # Set the default active profile here (change to 'git' to use the remote repo)
   profiles:
-    active: native
-  cloud:
-    config:
-      server:
-        native:
-          search-locations: classpath:/config
+    active: git
 
 server:
   port: 8888
@@ -16,3 +15,35 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+---
+# ==========================================
+# Native Profile (Local File System)
+# Used for local development to load config files directly from the classpath
+# ==========================================
+spring:
+  config:
+    activate:
+      on-profile: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/config
+
+---
+# ==========================================
+# Git Profile (Remote Repository)
+# Used for staging/production to fetch config files from a central Git repo
+# ==========================================
+spring:
+  config:
+    activate:
+      on-profile: git
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/isurahirantha/banking-platform-configs.git
+          # search-paths: <your-config-folder> # Uncomment if your config files are in a specific subfolder of the repo
+          clone-on-start: true
