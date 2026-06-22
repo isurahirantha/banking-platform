@@ -1,8 +1,30 @@
+server:
+  port: 8080
 spring:
   application:
     name: api-gateway
   config:
     import: optional:configserver:http://localhost:8888
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path = /api/v1/auth/**
+            - Method = GET,POST
+          filters:
+            - StripPrefix = 2
 
-server:
-  port: 8080
+        - id: customer-service
+          uri: lb://customer-service
+          predicates:
+            - Path = /api/v1/customer/**
+            - Method = GET, POST, PUT, DELETE
+          filters:
+            - StripPrefix = 2
+
