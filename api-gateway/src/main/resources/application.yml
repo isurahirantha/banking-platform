@@ -7,10 +7,12 @@ spring:
     import: optional:configserver:http://localhost:8888
   cloud:
     gateway:
+      # Global defaults applied to all discovery-client traffic if enabled
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
+
       routes:
         - id: auth-service
           uri: lb://auth-service
