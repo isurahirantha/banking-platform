@@ -10,23 +10,78 @@ spring:
       # Global defaults applied to all discovery-client traffic if enabled
       discovery:
         locator:
-          enabled: true
+          enabled: false
           lower-case-service-id: true
 
       routes:
         - id: auth-service
           uri: lb://auth-service
           predicates:
-            - Path = /api/v1/auth/**
-            - Method = GET,POST
+            - Path=/api/v1/auth/**
+            - Method=GET,POST
           filters:
-            - StripPrefix = 2
+            - StripPrefix=2
 
         - id: customer-service
           uri: lb://customer-service
           predicates:
-            - Path = /api/v1/customer/**
-            - Method = GET, POST, PUT, DELETE
+            - Path=/api/v1/customer/**
+            - Method=GET, POST, PUT, DELETE
           filters:
-            - StripPrefix = 2
+            - StripPrefix=2
 
+        - id: account-service
+          uri: lb://account-service
+          predicates:
+            - Path=/api/v1/account/**
+            - Method=GET, POST, PUT, DELETE
+          filters:
+            - StripPrefix=2
+
+        - id: card-service
+          uri: lb://card-service
+          predicates:
+            - Path=/api/v1/card/**
+            - Method=GET, POST, PUT, DELETE
+          filters:
+            - StripPrefix=2
+
+        - id: audit-service
+          uri: lb://audit-service
+          predicates:
+            - Path=/api/v1/audit/**
+            - Method=GET, POST, PUT, DELETE
+          filters:
+            - StripPrefix=2
+
+        - id: bill-payment-service
+          uri: lb://bill-payment-service
+          predicates:
+            - Path=/api/v1/bill-payment/**
+            - Method=GET, POST, PUT, DELETE
+          filters:
+            - StripPrefix=2
+
+        - id: fraud-service
+          uri: lb://fraud-service
+          predicates:
+            - Path=/api/v1/fraud/**
+            - Method=GET, POST, PUT, DELETE
+          filters:
+            - StripPrefix=2
+
+        - id: fund-transfer-service
+          uri: lb://fund-transfer-service
+          predicates:
+            - Path=/api/v1/fund-transfer/**
+            - Method=GET, POST, PUT, DELETE
+          filters:
+            - StripPrefix=2
+
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/v1/notification/**
+            - Method=GET, POST, PUT, DELETE
+          filters:
+            - StripPrefix=2
